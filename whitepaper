@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CashBond - Technical Whitepaper</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #7B61FF;
+            --cyan: #00D4FF;
+            --pink: #FF00D4;
+            --teal: #2EBAC6;
+            --magenta: #B6509E;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --bg-light: #F8FAFC;
+            --success: #10B981;
+            --gradient-primary: linear-gradient(135deg, #667EEA 0%, #764BA2 50%, #F093FB 100%);
+            --border-color: #E2E8F0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            line-height: 1.8;
+            background: #FFFFFF;
+            font-weight: 400;
+        }
+
+        @media print {
+            body {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            .page-break {
+                page-break-after: always;
+            }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            background: white;
+        }
+
+        .cover {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+            color: white;
+            padding: 80px 40px;
+            position: relative;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: white;
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 20px;
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        h1 {
+            font-size: 64px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            font-weight: 400;
+            opacity: 0.95;
+            margin-bottom: 60px;
+            max-width: 700px;
+        }
+
+        .cover-meta {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 60px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .cover-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .cover-meta-label {
+            opacity: 0.7;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-top: 80px;
+            margin-bottom: 24px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 48px;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 32px;
+            margin-bottom: 12px;
+            color: var(--purple);
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        ul, ol {
+            margin-left: 24px;
+            margin-bottom: 24px;
+            color: var(--text-secondary);
+        }
+
+        li {
+            margin-bottom: 12px;
+            padding-left: 8px;
+        }
+
+        .info-box {
+            background: var(--bg-light);
+            border-left: 4px solid var(--purple);
+            padding: 24px;
+            margin: 32px 0;
+            border-radius: 8px;
+        }
+
+        .info-box h4 {
+            margin-top: 0;
+            color: var(--purple);
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, rgba(123, 97, 255, 0.1) 0%, rgba(46, 186, 198, 0.1) 100%);
+            padding: 32px;
+            border-radius: 16px;
+            margin: 32px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 32px 0;
+            font-size: 15px;
+        }
+
+        th {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid #E5E7EB;
+            color: var(--text-secondary);
+        }
+
+        tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            background: white;
+            border: 2px solid var(--bg-light);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        code {
+            background: var(--bg-light);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 14px;
+            color: var(--purple);
+        }
+
+        pre {
+            background: var(--text-primary);
+            color: #E5E7EB;
+            padding: 24px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 24px 0;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .checkmark {
+            color: var(--success);
+            font-weight: 700;
+            margin-right: 8px;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .feature-list li {
+            position: relative;
+            padding-left: 32px;
+            margin-bottom: 16px;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .footer {
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 2px solid var(--bg-light);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .contract-address {
+            font-family: 'SF Mono', monospace;
+            background: var(--bg-light);
+            padding: 16px;
+            border-radius: 8px;
+            word-break: break-all;
+            margin: 24px 0;
+            font-size: 14px;
+            border: 1px solid #E5E7EB;
+        }
+    </style>
+</head>
+<body>
+    <!-- COVER PAGE -->
+    <div class="cover page-break">
+        <div class="logo"><img src="icon.png" alt="CashBond Logo" /></div>
+        <h1>CashBond</h1>
+        <p class="subtitle">Technical Whitepaper: A Fully Decentralized, Immutable USDT Staking Protocol on BNB Smart Chain</p>
+        
+        <div class="cover-meta">
+            <div class="cover-meta-item">
+                <span class="cover-meta-label">Version</span>
+                <span>1.0.0</span>
+            </div>
+            <div class="cover-meta-item">
+                <span class="cover-meta-label">Date</span>
+                <span>February 2026</span>
+            </div>
+            <div class="cover-meta-item">
+                <span class="cover-meta-label">Network</span>
+                <span>BSC (BEP-20)</span>
+            </div>
+            <div class="cover-meta-item">
+                <span class="cover-meta-label">Status</span>
+                <span>Deployed & Audited</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABSTRACT -->
+    <div class="container">
+        <h2>Abstract</h2>
+        <p>CashBond is a trustless, immutable staking protocol deployed on BNB Smart Chain that enables users to earn daily yields on USDT deposits. With ownership renounced and zero administrative functions, the protocol operates autonomously through immutable smart contract code, providing 1.5% daily returns (547.5% APR) with complete capital flexibility and no lock periods.</p>
+        
+        <p>The protocol features a single-level direct referral system that rewards genuine user acquisition without multi-level marketing complexity, encouraging organic community growth while maintaining mathematical sustainability through a balanced fee structure.</p>
+
+        <div class="highlight">
+            <h4>Key Innovations</h4>
+            <ul class="feature-list">
+                <li>Fully autonomous operation with zero administrative control</li>
+                <li>Direct referral rewards (5-15%) based on actual business performance</li>
+                <li>Complete capital liquidity with no lock periods or withdrawal limits</li>
+                <li>Transparent fee structure with pool-based performance fees</li>
+                <li>Gas-optimized smart contract design with comprehensive testing</li>
+            </ul>
+        </div>
+
+        <!-- TABLE OF CONTENTS -->
+        <div class="page-break"></div>
+        <h2>Table of Contents</h2>
+        <ol>
+            <li>Introduction & Problem Statement</li>
+            <li>Protocol Architecture</li>
+            <li>Tokenomics & Yield Mechanism</li>
+            <li>Referral System Design</li>
+            <li>Security & Trust Guarantees</li>
+            <li>Smart Contract Implementation</li>
+            <li>Technical Specifications</li>
+            <li>Risk Disclosure & Disclaimer</li>
+        </ol>
+
+        <!-- 1. INTRODUCTION -->
+        <div class="page-break"></div>
+        <h2>1. Introduction & Problem Statement</h2>
+        
+        <h3>1.1 The DeFi Trust Problem</h3>
+        <p>Traditional DeFi staking protocols suffer from a fundamental trust problem: users must trust developers not to exploit administrative privileges. Common vulnerabilities include:</p>
+        
+        <ul>
+            <li><strong>Owner Control:</strong> Ability to pause contracts, modify parameters, or extract funds</li>
+            <li><strong>Upgradeability:</strong> Proxy patterns allowing arbitrary code changes</li>
+            <li><strong>Parameter Manipulation:</strong> Dynamic fee structures and rate modifications</li>
+            <li><strong>Emergency Withdrawals:</strong> Hidden functions enabling fund extraction</li>
+        </ul>
+
+        <h3>1.2 Our Solution</h3>
+        <p>CashBond eliminates trust requirements through radical transparency and immutability:</p>
+        
+        <ul class="feature-list">
+            <li>Ownership renounced to <code>address(0)</code> immediately after deployment</li>
+            <li>All parameters hardcoded as immutable constants</li>
+            <li>No administrative functions whatsoever</li>
+            <li>Open-source code verified on BSCScan</li>
+            <li>Deployer private key published for ultimate transparency</li>
+            <li>Professional third-party audit completed</li>
+        </ul>
+
+        <!-- 2. PROTOCOL ARCHITECTURE -->
+        <div class="page-break"></div>
+        <h2>2. Protocol Architecture</h2>
+
+        <h3>2.1 System Overview</h3>
+        <p>CashBond operates as a shared liquidity pool where all deposits contribute to a communal reserve. The protocol calculates rewards based on individual stake proportions and time elapsed, distributing returns in a transparent and predictable manner.</p>
+
+        <div class="info-box">
+            <h4>Core Components</h4>
+            <p><strong>Staking Token:</strong> BEP-20 USDT (0x55d398326f99059fF775485246999027B3197955)</p>
+            <p><strong>Network:</strong> BNB Smart Chain (Chain ID: 56)</p>
+            <p><strong>Contract:</strong> 0xCc7EBe1C0383B0B6259DFeCd1Db1B884630AC37d</p>
+        </div>
+
+        <h3>2.2 User Flow</h3>
+        <ol>
+            <li><strong>Deposit:</strong> User approves and deposits USDT (minimum $1)</li>
+            <li><strong>Accumulation:</strong> Rewards accumulate every second at 1.5% daily rate</li>
+            <li><strong>Claim:</strong> User claims rewards to wallet anytime (20% performance fee applies)</li>
+            <li><strong>Manual Compound:</strong> User can claim rewards and manually deposit them back to increase stake</li>
+            <li><strong>Withdraw:</strong> User can withdraw principal anytime with no restrictions (0% fee)</li>
+        </ul>
+
+        <h3>Manual Compounding Strategy</h3>
+        <p>While the contract does not have an automated compound function, users can maximize returns by manually compounding their rewards:</p>
+        
+        <ol style="margin-left: 20px; margin-bottom: 20px;">
+            <li><strong>Claim</strong> your pending rewards (20% performance fee applies)</li>
+            <li><strong>Deposit</strong> the claimed USDT back into the contract (0% deposit fee)</li>
+            <li><strong>Increase</strong> your stake, earning 1.5% daily on a larger principal</li>
+            <li><strong>Repeat</strong> regularly for exponential growth</li>
+        </ol>
+
+        <h4>Manual Compound Returns Example ($1,000 initial stake):</h4>
+        <table style="width: 100%; margin: 20px 0; border-collapse: collapse;">
+            <thead>
+                <tr style="background: var(--bg-light); border-bottom: 2px solid #E5E7EB;">
+                    <th style="padding: 12px; text-align: left;">Period</th>
+                    <th style="padding: 12px; text-align: right;">Simple (No Reinvest)</th>
+                    <th style="padding: 12px; text-align: right;">Manual Compound</th>
+                    <th style="padding: 12px; text-align: right;">Extra Profit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid #E5E7EB;">
+                    <td style="padding: 12px;">30 days</td>
+                    <td style="padding:12px; text-align: right; font-weight: 600;">$1,450</td>
+                    <td style="padding: 12px; text-align: right; font-weight: 600; color: var(--success);">$1,563</td>
+                    <td style="padding: 12px; text-align: right; font-weight: 700; color: var(--success);">+$113</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #E5E7EB;">
+                    <td style="padding: 12px;">90 days</td>
+                    <td style="padding: 12px; text-align: right; font-weight: 600;">$2,350</td>
+                    <td style="padding: 12px; text-align: right; font-weight: 600; color: var(--success);">$3,816</td>
+                    <td style="padding: 12px; text-align: right; font-weight: 700; color: var(--success);">+$1,466</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #E5E7EB;">
+                    <td style="padding: 12px;">180 days</td>
+                    <td style="padding: 12px; text-align: right; font-weight: 600;">$3,700</td>
+                    <td style="padding: 12px; text-align: right; font-weight: 600; color: var(--success);">$14,554</td>
+                    <td style="padding: 12px; text-align: right; font-weight: 700; color: var(--success);">+$10,854</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px;">365 days</td>
+                    <td style="padding: 12px; text-align: right; font-weight: 600;">$6,475</td>
+                    <td style="padding: 12px; text-align: right; font-weight: 600; color: var(--success);">$211,758</td>
+                    <td style="padding: 12px; text-align: right; font-weight: 700; color: var(--success);">+$205,283</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="background: linear-gradient(135deg, rgba(123, 97, 255, 0.1), rgba(0, 212, 255, 0.1)); padding: 20px; border-radius: 12px; border-left: 4px solid var(--purple); margin: 24px 0;">
+            <p style="margin-bottom: 12px;"><strong style="color: var(--purple);">💡 Pro Tip:</strong> The power of manual compounding is dramatic!</p>
+            <ul style="margin-left: 20px;">
+                <li>Claiming daily and re-staking maximizes compound growth</li>
+                <li>After 1 year: <strong style="color: var(--success);">211x return</strong> with daily reinvesting vs 6.5x without</li>
+                <li>The 20% performance fee is only on claimed rewards, not deposits</li>
+                <li>Deposits are always 0% fee - no cost to reinvest your gains</li>
+            </ul>
+        </div>
+
+        <ul>
+        </ol>
+
+        <!-- 3. TOKENOMICS -->
+        <div class="page-break"></div>
+        <h2>3. Tokenomics & Yield Mechanism</h2>
+
+        <h3>3.1 Yield Structure</h3>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">1.5%</div>
+                <div class="stat-label">Daily Yield</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">547.5%</div>
+                <div class="stat-label">Annual APR</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">20%</div>
+                <div class="stat-label">Performance Fee</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">0%</div>
+                <div class="stat-label">Deposit/Withdrawal Fees</div>
+            </div>
+        </div>
+
+        <h3>3.2 Reward Calculation</h3>
+        <p>Rewards are calculated per second using the following formula:</p>
+        
+        <pre>
+Pending Reward = (Staked Amount × Daily Rate × Time Elapsed) / Seconds Per Day
+Where:
+    Daily Rate = 150 basis points (1.5%)
+    Seconds Per Day = 86,400
+    Time Elapsed = Current Time - Last Claim Time</pre>
+
+        <h3>3.3 Fee Structure</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Fee</th>
+                    <th>Charged To</th>
+                    <th>Recipient</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Deposit</td>
+                    <td>0%</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>Withdraw</td>
+                    <td>0%</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>Claim Rewards</td>
+                    <td>20%</td>
+                    <td>Pool</td>
+                    <td>Fee Receiver (0x305F...C065)</td>
+                </tr>
+                <tr>
+                    <td>Withdraw</td>
+                    <td>0%</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="info-box">
+            <h4>Important: Fee Mechanism</h4>
+            <p>The 20% performance fee is charged <strong>from the pool</strong>, not deducted from the user's claimed amount. When you claim $100 in rewards, you receive the full $100, and the pool pays an additional $20 as the protocol fee. This ensures users always receive their full entitled rewards.</p>
+        </div>
+
+        <!-- 4. REFERRAL SYSTEM -->
+        <div class="page-break"></div>
+        <h2>4. Referral System Design</h2>
+
+        <h3>4.1 Philosophy: Direct Business, Not MLM</h3>
+        <p>CashBond implements a single-level referral system that rewards genuine user acquisition. Unlike multi-level marketing schemes, there is no team depth, no pyramid structure, and no complexity. You earn commission only on YOUR direct referrals' rewards.</p>
+
+        <h3>4.2 Tier Structure</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Tier</th>
+                    <th>Active Directs Required</th>
+                    <th>Commission Rate</th>
+                    <th>Icon</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Starter</td>
+                    <td>0+</td>
+                    <td>5%</td>
+                    <td>⭐</td>
+                </tr>
+                <tr>
+                    <td>Bronze</td>
+                    <td>3+</td>
+                    <td>8%</td>
+                    <td>🥉</td>
+                </tr>
+                <tr>
+                    <td>Silver</td>
+                    <td>5+</td>
+                    <td>10%</td>
+                    <td>🥈</td>
+                </tr>
+                <tr>
+                    <td>Gold</td>
+                    <td>10+</td>
+                    <td>12%</td>
+                    <td>🥇</td>
+                </tr>
+                <tr>
+                    <td>Diamond</td>
+                    <td>25+</td>
+                    <td>15%</td>
+                    <td>💎</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>4.3 Requirements & Rules</h3>
+        
+        <ul class="feature-list">
+            <li>Minimum $50 self-stake required to earn any referral rewards</li>
+            <li>Active direct = referral with $50+ currently staked</li>
+            <li>Commission paid when referrals claim their ROI rewards</li>
+            <li>Referral rewards are separate from staking rewards</li>
+            <li>Both rewards are claimed directly to your wallet</li>
+            <li>No multi-level depth — single level only</li>
+        </ul>
+
+        <h3>4.4 Economic Example</h3>
+        
+        <div class="highlight">
+            <h4>Diamond Tier Earnings Potential</h4>
+            <p><strong>Scenario:</strong> 25 active directs, each staking $500</p>
+            
+            <p><strong>Each referral earns:</strong> $500 × 1.5% = $7.50/day</p>
+            <p><strong>Your commission (15%):</strong> $7.50 × 0.15 = $1.125/day per referral</p>
+            <p><strong>Total referral income:</strong> $1.125 × 25 = $28.13/day</p>
+            <p><strong>Monthly passive income:</strong> $843.75 (from referrals alone)</p>
+            <p><strong>Annual:</strong> $10,267.50 (before your own staking rewards)</p>
+        </div>
+
+        <!-- 5. SECURITY -->
+        <div class="page-break"></div>
+        <h2>5. Security & Trust Guarantees</h2>
+
+        <h3>5.1 Trust Elimination Architecture</h3>
+        
+        <ul class="feature-list">
+            <li><strong>No Owner:</strong> Ownership renounced to 0x0000...0000 immediately after deployment</li>
+            <li><strong>No Admin Functions:</strong> Zero <code>onlyOwner</code> modifiers in the entire codebase</li>
+            <li><strong>Immutable Parameters:</strong> All rates and constants defined as <code>constant</code></li>
+            <li><strong>No Pause Function:</strong> Contract cannot be frozen or stopped</li>
+            <li><strong>No Upgradeability:</strong> No proxy pattern, no delegatecall, code is final</li>
+            <li><strong>Deployer Key Published:</strong> Private key shared publicly, proving no special access</li>
+        </ul>
+
+        <h3>5.2 Smart Contract Security Features</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Protection</th>
+                    <th>Implementation</th>
+                    <th>Benefit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Reentrancy</td>
+                    <td>OpenZeppelin ReentrancyGuard</td>
+                    <td>Prevents recursive call attacks</td>
+                </tr>
+                <tr>
+                    <td>Safe Transfers</td>
+                    <td>OpenZeppelin SafeERC20</td>
+                    <td>Handles non-standard token returns</td>
+                </tr>
+                <tr>
+                    <td>Integer Overflow</td>
+                    <td>Solidity 0.8.20+ built-in</td>
+                    <td>Automatic overflow/underflow checks</td>
+                </tr>
+                <tr>
+                    <td>Pool Depletion</td>
+                    <td>Balance-capped rewards</td>
+                    <td>Prevents claiming more than available</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>5.3 Audit Report</h3>
+        <p>CashBond has been audited by HazeCrypto, an independent smart contract security firm. The audit covered:</p>
+        
+        <ul>
+            <li>Complete code review and vulnerability assessment</li>
+            <li>Gas optimization analysis</li>
+            <li>Business logic verification</li>
+            <li>Test coverage validation (63/63 tests passing)</li>
+        </ul>
+
+        <div class="contract-address">
+            <strong>Audit Report:</strong> https://hazecrypto.net/audit/PassiveFortune
+        </div>
+
+        <!-- 6. SMART CONTRACT -->
+        <div class="page-break"></div>
+        <h2>6. Smart Contract Implementation</h2>
+
+        <h3>6.1 Technology Stack</h3>
+        
+        <ul>
+            <li><strong>Language:</strong> Solidity 0.8.20</li>
+            <li><strong>Framework:</strong> Hardhat</li>
+            <li><strong>Libraries:</strong> OpenZeppelin Contracts v5.0</li>
+            <li><strong>Testing:</strong> Hardhat + Chai (63/63 tests passing)</li>
+        </ul>
+
+        <h3>6.2 Gas Optimizations</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Optimization</th>
+                    <th>Technique</th>
+                    <th>Gas Saved</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Custom Errors</td>
+                    <td>Use custom errors vs require strings</td>
+                    <td>~200 gas per revert</td>
+                </tr>
+                <tr>
+                    <td>Struct Packing</td>
+                    <td>address (20 bytes) + bool (1 byte) in one slot</td>
+                    <td>~20,000 gas per user</td>
+                </tr>
+                <tr>
+                    <td>Event Optimization</td>
+                    <td>uint8 fee type instead of string</td>
+                    <td>~500 gas per emit</td>
+                </tr>
+                <tr>
+                    <td>Direct Count Tracking</td>
+                    <td>O(1) mapping vs O(n) array iteration</td>
+                    <td>Unbounded savings</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>6.3 Core Functions</h3>
+
+        <h4>deposit(uint256 amount, address referrer)</h4>
+        <p>Deposits USDT into the staking pool. First-time users can optionally specify a referrer address. Subsequent deposits do not change the referrer relationship.</p>
+
+        <h4>withdraw(uint256 amount)</h4>
+        <p>Withdraws staked USDT from the pool. No restrictions, no fees, no lock period. Reduces active direct count for the user's referrer if applicable.</p>
+
+        <h4>claimRewards()</h4>
+        <p>Claims both staking ROI rewards and referral commission rewards. 20% performance fee charged from pool on ROI rewards only. User receives full entitled amount.</p>
+
+
+        <h4>pendingReward(address user)</h4>
+        <p>View function that calculates current claimable rewards based on stake amount and time elapsed since last claim.</p>
+
+        <!-- 7. TECHNICAL SPECS -->
+        <div class="page-break"></div>
+        <h2>7. Technical Specifications</h2>
+
+        <h3>7.1 Smart Contract Constants</h3>
+
+        <pre>
+DAILY_RATE = 150 basis points (1.5%)
+PROTOCOL_FEE_RATE = 2000 basis points (20%)
+BASIS_POINTS = 10000
+SECONDS_PER_DAY = 86400
+MIN_DEPOSIT = 1e18 ($1 USDT)
+MIN_SELF_STAKE_FOR_REF = 50e18 ($50 USDT)
+ACTIVE_DIRECT_MIN_STAKE = 50e18 ($50 USDT)
+
+REF_RATE_STARTER = 500 (5%)
+REF_RATE_BRONZE = 800 (8%)
+REF_RATE_SILVER = 1000 (10%)
+REF_RATE_GOLD = 1200 (12%)
+REF_RATE_DIAMOND = 1500 (15%)
+
+TIER_BRONZE_DIRECTS = 3
+TIER_SILVER_DIRECTS = 5
+TIER_GOLD_DIRECTS = 10
+TIER_DIAMOND_DIRECTS = 25
+
+FEE_RECEIVER = 0x305F679A88AdC6E982f8a515Ca52403EC30eC065 (immutable)</pre>
+
+        <h3>7.2 Events</h3>
+        
+        <ul>
+            <li><code>Deposited(address indexed user, uint256 amount, address indexed referrer)</code></li>
+            <li><code>Withdrawn(address indexed user, uint256 amount)</code></li>
+            <li><code>RewardsClaimed(address indexed user, uint256 amount)</code></li>
+            <li><code>ReferralRewardPaid(address indexed referrer, address indexed referee, uint256 amount, uint256 tierRate)</code></li>
+            <li><code>ProtocolFeeCharged(uint256 amount, uint8 feeType)</code></li>
+            <li><code>UserRegistered(address indexed user, uint256 timestamp)</code></li>
+        </ul>
+
+        <h3>7.3 Deployment Details</h3>
+        
+        <div class="contract-address">
+            <strong>Contract Address:</strong> 0xCc7EBe1C0383B0B6259DFeCd1Db1B884630AC37d
+        </div>
+        
+        <div class="contract-address">
+            <strong>USDT Token:</strong> 0x55d398326f99059fF775485246999027B3197955
+        </div>
+        
+        <div class="contract-address">
+            <strong>BSCScan:</strong> https://bscscan.com/address/0xCc7EBe1C0383B0B6259DFeCd1Db1B884630AC37d
+        </div>
+
+        <!-- 8. RISKS -->
+        <div class="page-break"></div>
+        <h2>8. Risk Disclosure & Disclaimer</h2>
+
+        <h3>8.1 Protocol Sustainability</h3>
+        <p>CashBond operates as a shared liquidity pool model. The 1.5% daily yield (547.5% APR) is mathematically sustainable only with continuous new capital inflow. This is a fundamental characteristic of pool-based yield protocols and users must understand:</p>
+        
+        <ul>
+            <li>Returns depend on new deposits entering the pool</li>
+            <li>Pool depletion can occur if withdrawals exceed deposits</li>
+            <li>Early participants benefit from subsequent deposits</li>
+            <li>The protocol does not generate external yield or revenue</li>
+        </ul>
+
+        <h3>8.2 Smart Contract Risks</h3>
+        <p>While CashBond has been professionally audited and extensively tested, smart contract risks can never be eliminated to zero:</p>
+        
+        <ul>
+            <li>Potential undiscovered vulnerabilities in the code</li>
+            <li>Blockchain network risks (reorganization, consensus failures)</li>
+            <li>Token contract risks (USDT upgrade or freeze functions)</li>
+        </ul>
+
+        <h3>8.3 Regulatory Considerations</h3>
+        <p>DeFi protocols exist in a rapidly evolving regulatory landscape. Users should:</p>
+        
+        <ul>
+            <li>Understand their local jurisdiction's stance on DeFi participation</li>
+            <li>Be aware of tax implications on rewards and gains</li>
+            <li>Recognize that high-yield DeFi protocols may face regulatory scrutiny</li>
+        </ul>
+
+        <h3>8.4 User Responsibility</h3>
+        
+        <div class="info-box">
+            <h4>Important Notice</h4>
+            <p>CashBond is provided as-is with no warranties. By interacting with the protocol, users acknowledge:</p>
+            <ul style="margin-top: 16px;">
+                <li>They have read and understood this whitepaper</li>
+                <li>They accept all risks associated with DeFi participation</li>
+                <li>They are solely responsible for their investment decisions</li>
+                <li>They should only invest capital they can afford to lose</li>
+                <li>The protocol makes no guarantees of profitability or sustainability</li>
+            </ul>
+        </div>
+
+        <h2>Conclusion</h2>
+        <p>CashBond represents a paradigm shift in DeFi staking: complete trustlessness through radical transparency and immutability. By eliminating all administrative control and making every parameter immutable, the protocol operates purely through code execution, with no human intervention possible.</p>
+        
+        <p>The combination of high daily yields, zero entry/exit fees, complete capital flexibility, and a direct referral system creates a compelling value proposition for users seeking passive income opportunities in the DeFi space.</p>
+        
+        <p>However, users must approach the protocol with clear understanding of its pool-based sustainability model and accept the inherent risks associated with high-yield DeFi participation.</p>
+
+        <div class="footer">
+            <p><strong>CashBond Technical Whitepaper v1.0</strong></p>
+            <p>© 2026 CashBond Protocol | https://cashbond.github.io</p>
+            <p style="margin-top: 20px; font-size: 12px;">This document is for informational purposes only and does not constitute financial advice. Always DYOR.</p>
+        </div>
+    </div>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v67327c56f0bb4ef8b305cae61679db8f1769101564043" integrity="sha512-rdcWY47ByXd76cbCFzznIcEaCN71jqkWBBqlwhF1SY7KubdLKZiEGeP7AyieKZlGP9hbY/MhGrwXzJC/HulNyg==" data-cf-beacon='{"version":"2024.11.0","token":"1117f2394f94445f891f06d3dc2e9d62","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+
+
+</html>
